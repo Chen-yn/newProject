@@ -7,3 +7,7 @@ declare module '*.bmp'
 declare module '*.tiff'
 declare module '*.less'
 declare module '*.css'
+declare module 'jquery'
+declare module '@loadable/component'
+declare module "react-monaco-editor"
+declare module 'lodash';

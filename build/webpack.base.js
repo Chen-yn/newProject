@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const isDev = process.env.NODE_ENV === 'development' // 是否是开发模式
 
+
 module.exports = {
     entry: path.join(__dirname, '../src/index.tsx'), // 入口文件
     // 打包文件出口
@@ -19,12 +20,16 @@ module.exports = {
         rules: [
             {
                 include: [path.resolve(__dirname, '../src')], //只对项目src文件的ts,tsx进行loader解析
-                test: /.(ts|tsx)$/, // 匹配.ts, tsx文件
+                test: /.(js|jsx|ts|tsx)$/, // 匹配.ts, tsx文件
                 use: ['thread-loader', 'babel-loader'],
             },
+            // {
+            //     test: /\.css$/,
+            //     use: ["style-loader", "css-loader"],
+            // },
             {
-                test: /.css$/, //匹配 css和less 文件
-                include: [path.resolve(__dirname, '../src')],
+                test: /\.css$/, //匹配 css和less 文件
+                // include: [path.resolve(__dirname, '../src')],
                 use: [
                     isDev ? 'style-loader' : MiniCssExtractPlugin.loader, // 开发环境使用style-looader,打包模式抽离css
                     'css-loader',
@@ -82,7 +87,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.tsx', '.ts'],
         alias: {
-            '@': path.join(__dirname, '../src')
+            '@': path.join(__dirname, '../src'),
         },
         modules: [path.resolve(__dirname, '../node_modules')], // 查找第三方模块只在本项目的node_modules中查找
     },
@@ -93,7 +98,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             'process.env.BASE_ENV': JSON.stringify(process.env.BASE_ENV)
-        })
+        }),
     ],
     cache: {
         type: 'filesystem', // 使用文件缓存
